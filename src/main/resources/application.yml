@@ -1,0 +1,43 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: baobiao
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/excel?serverTimezone=UTC
+    username: root
+    password: 1234
+    type: com.alibaba.druid.pool.DruidDataSource
+    #   数据源其他配置
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    maxWait: 60000
+    #空闲连接检查时间间隔
+    timeBetweenEvictionRunsMillis: 60000
+    #空闲连接最小空闲时间
+    minEvictableIdleTimeMillis: 30000
+    #解决mysql8小时的问题
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,slf4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 30MB
+      max-request-size: 60MB
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  type-aliases-package: cn.itcast.baobiao.pojo
+  mapper-locations: classpath:mapper/*.xml
+
